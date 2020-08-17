@@ -18,7 +18,7 @@ public class JsoupTest {
 //			Elements contents = doc.select("h1");
 			Elements contents = doc.select("div");
 //			System.out.println(contents);
-//			System.out.println(contents.attr("data-react-props"));
+			System.out.println(contents.attr("data-react-props"));
 			
 			String str = contents.attr("data-react-props");			
 			

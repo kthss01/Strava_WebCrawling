@@ -25,7 +25,8 @@ public class JsonSimpleTest {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-		Document doc = Jsoup.connect("https://www.strava.com/athletes/51315032").get();
+//		Document doc = Jsoup.connect("https://www.strava.com/athletes/51315032").get();
+		Document doc = Jsoup.connect("https://www.strava.com/athletes/7013156").get();
 		Elements contents = doc.select("div");
 		String json = contents.attr("data-react-props");
 //		System.out.println(json);
@@ -75,7 +76,7 @@ public class JsonSimpleTest {
 		 */
 
 //		System.out.println(obj.get("recentActivities")); // JSONArray
-//		printJsonArray(obj.get("recentActivities"));
+		printJsonArray(obj.get("recentActivities"));
 		/*
 		 * elevation
 		 * images - JSONArray 
