@@ -25,8 +25,8 @@ public class JsonSimpleTest {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-//		Document doc = Jsoup.connect("https://www.strava.com/athletes/51315032").get();
-		Document doc = Jsoup.connect("https://www.strava.com/athletes/7013156").get();
+		Document doc = Jsoup.connect("https://www.strava.com/athletes/51315032").get();
+//		Document doc = Jsoup.connect("https://www.strava.com/athletes/7013156").get();
 		Elements contents = doc.select("div");
 		String json = contents.attr("data-react-props");
 //		System.out.println(json);
@@ -49,15 +49,18 @@ public class JsonSimpleTest {
 //		System.out.println(obj.get("athlete"));
 //		((JSONObject) obj.get("athlete")).forEach((key, value) -> System.out.println(key + " " + value));
 //		printJsonObject(obj.get("athlete"));
-
+		
 		/*
 		 * avatarUrl 
 		 * name 
 		 * primarySport 
 		 * location 
-		 * followerCount 
-		 * follwoingCount
+		 * followersCount 
+		 * followingCount
 		 */
+		
+//		String str = ((JSONObject)obj.get("athlete")).get("followingCount").toString();
+//		System.out.println(str);
 
 //		System.out.println(obj.get("stats"));
 //		printJsonObject(obj.get("stats"));
@@ -91,7 +94,7 @@ public class JsonSimpleTest {
 		 * type 
 		 */
 		
-		printJsonArray(((JSONObject)((JSONArray)obj.get("recentActivities")).get(0)).get("images"));
+//		printJsonArray(((JSONObject)((JSONArray)obj.get("recentActivities")).get(0)).get("images"));
 		/*
 		 * defaultSrc 
 		 * squareSrc
