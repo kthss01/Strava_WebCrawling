@@ -1,5 +1,7 @@
 package webCrawler;
 
+import java.io.File;
+
 import org.json.simple.JSONObject;
 
 public class Athlete {
@@ -23,6 +25,10 @@ public class Athlete {
 	
 	public String getAvatarUrl() {
 		if (obj.get("avatarUrl") == null) return "";
+		else if(obj.get("avatarUrl").toString().contains(".svg")) 
+		{
+			return "file:resources/avatar.png";
+		}
 		return obj.get("avatarUrl").toString();
 	}
 	

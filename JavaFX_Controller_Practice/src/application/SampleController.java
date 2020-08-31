@@ -1,14 +1,18 @@
 package application;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
-public class SampleController {
+public class SampleController implements Initializable {
 	@FXML
 	Label label1;
 	@FXML
@@ -42,5 +46,10 @@ public class SampleController {
 		});
 		
 		flowPane1.getChildren().add(btn);
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		textField1.setText("Test Init");
 	}
 }

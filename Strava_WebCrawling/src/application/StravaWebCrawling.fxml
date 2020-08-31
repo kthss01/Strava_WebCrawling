@@ -1,7 +1,397 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StravaWebCrawlingController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="860.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StravaWebCrawlingController">
+	<top>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<TextField fx:id="userQuery" layoutX="125.0" layoutY="107.0" prefHeight="50.0" prefWidth="399.0" promptText="선수 번호 입력 ex) 51315032">
+					<font>
+						<Font name="Corbel" size="24.0" />
+					</font>
+				</TextField>
+				<Label alignment="CENTER" layoutX="243.0" layoutY="32.0" prefHeight="56.0" prefWidth="538.0" text="Strava 선수 검색기">
+					<font>
+						<Font name="Corbel" size="40.0" />
+					</font>
+				</Label>
+				<Button layoutX="706.0" layoutY="107.0" mnemonicParsing="false" onAction="#searchUserBtn" prefHeight="50.0" prefWidth="150.0" text="검색">
+					<font>
+						<Font name="Corbel" size="22.0" />
+					</font>
+				</Button>
+			</children>
+		</Pane>
+	</top>
+	<center>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<ImageView fx:id="profile" fitHeight="170.0" fitWidth="162.0" layoutX="38.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="https://dgalywyr863hv.cloudfront.net/pictures/athletes/51315032/14526524/2/large.jpg" />
+					</image>
+				</ImageView>
+				<Label fx:id="name" layoutX="228.0" layoutY="1.0" prefHeight="46.0" prefWidth="360.0" text="태훈 김">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="location" layoutX="228.0" layoutY="45.0" prefHeight="26.0" prefWidth="361.0" text="서울, 서울시">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label layoutX="228.0" layoutY="120.0" text="팔로워">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label layoutX="228.0" layoutY="154.0" text="팔로잉">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="followersCount" alignment="CENTER" layoutX="312.0" layoutY="119.0" prefHeight="24.0" prefWidth="80.0" text="204">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="followingCount" alignment="CENTER" layoutX="312.0" layoutY="152.0" prefHeight="24.0" prefWidth="80.0" text="312">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label layoutX="414.0" layoutY="121.0" text="거리">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label layoutX="414.0" layoutY="154.0" text="이동 시간">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="monthlyDistance" alignment="CENTER_RIGHT" layoutX="516.0" layoutY="121.0" prefHeight="24.0" prefWidth="120.0" text="180.8km">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="monthlyTime" alignment="CENTER_RIGHT" layoutX="518.0" layoutY="153.0" prefHeight="24.0" prefWidth="89.0" text="17:09:37">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<TabPane layoutX="38.0" layoutY="202.0" prefHeight="334.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE">
+					<tabs>
+						<Tab fx:id="activityNameDate1" text="2020년 8월 14일 | 점심 걷기">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<ImageView fx:id="detailedTypeImg1" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../icon/walk.png" />
+											</image>
+										</ImageView>
+										<Label layoutX="14.0" layoutY="131.0" text="시간">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="movingTime1" layoutX="130.0" layoutY="131.0" text="22:16">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="14.0" layoutY="187.0" text="거리">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="distance1" layoutX="123.0" layoutY="187.0" text="1.5km">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="13.0" layoutY="239.0" text="상승고도">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="elevation1" layoutX="134.0" layoutY="238.0" text="55m">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="startDateLocal1" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="activitiyName1" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+											<font>
+												<Font size="16.0" />
+											</font>
+										</Label>
+										<TabPane layoutX="200.0" layoutY="73.0">
+											<tabs>
+												<Tab fx:id="imageType11" closable="false" text="Map">
+													<content>
+														<ImageView fx:id="image11" fitHeight="224.0" fitWidth="504.0" pickOnBounds="true" preserveRatio="true">
+															<image>
+																<Image url="https://d3o5xota0a1fcr.cloudfront.net/maps/DNDOZQILN3P6D5KRXPNNXKG7PYM32KW6SQUIBS77P7CJCSRG7GRUZHEIJ2VZX3VZW3VESS6NKE2YUNMG22BZWS4CKRQVACCC" />
+															</image>
+														</ImageView>
+													</content>
+												</Tab>
+												<Tab closable="false" text="Photo">
+													<content>
+													</content>
+												</Tab>
+											</tabs>
+										</TabPane>
+										<Label fx:id="detailedType1" layoutX="134.0" layoutY="74.0" text="걷기">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<TextArea fx:id="description1" editable="false" layoutX="198.0" layoutY="29.0" prefHeight="36.0" prefWidth="506.0" text="오늘 코스가 재밌다는  아들.&#10;특히 낙타등 재미에 빠져 평지는 심심하단다.ㅋ&#10;담주 한번더  .코스바꿔 타보는거로.." />
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="activityNameDate2" text="Untitled Tab 2">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<ImageView fx:id="detailedTypeImg2" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../icon/walk.png" />
+											</image>
+										</ImageView>
+										<Label layoutX="14.0" layoutY="131.0" text="시간">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="movingTime2" layoutX="130.0" layoutY="131.0" text="22:16">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="14.0" layoutY="187.0" text="거리">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="distance2" layoutX="123.0" layoutY="187.0" text="1.5km">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="13.0" layoutY="239.0" text="상승고도">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="elevation2" layoutX="134.0" layoutY="238.0" text="55m">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="startDateLocal2" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="activitiyName2" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+											<font>
+												<Font size="16.0" />
+											</font>
+										</Label>
+										<TabPane layoutX="200.0" layoutY="73.0">
+											<tabs>
+												<Tab fx:id="imageType21" closable="false" text="Map">
+													<content>
+														<ImageView fx:id="image21" fitHeight="224.0" fitWidth="504.0" pickOnBounds="true" preserveRatio="true">
+															<image>
+																<Image url="https://d3o5xota0a1fcr.cloudfront.net/maps/DNDOZQILN3P6D5KRXPNNXKG7PYM32KW6SQUIBS77P7CJCSRG7GRUZHEIJ2VZX3VZW3VESS6NKE2YUNMG22BZWS4CKRQVACCC" />
+															</image>
+														</ImageView>
+													</content>
+												</Tab>
+												<Tab closable="false" text="Photo">
+													<content>
+													</content>
+												</Tab>
+											</tabs>
+										</TabPane>
+										<Label fx:id="detailedType2" layoutX="134.0" layoutY="74.0" text="걷기">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<TextArea fx:id="description2" editable="false" layoutX="198.0" layoutY="29.0" prefHeight="36.0" prefWidth="506.0" text="오늘 코스가 재밌다는  아들.&#10;특히 낙타등 재미에 빠져 평지는 심심하단다.ㅋ&#10;담주 한번더  .코스바꿔 타보는거로.." />
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="activityNameDate3" text="Untitled Tab 3">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<ImageView fx:id="detailedTypeImg3" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../icon/walk.png" />
+											</image>
+										</ImageView>
+										<Label layoutX="14.0" layoutY="131.0" text="시간">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="movingTime3" layoutX="130.0" layoutY="131.0" text="22:16">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="14.0" layoutY="187.0" text="거리">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="distance3" layoutX="123.0" layoutY="187.0" text="1.5km">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label layoutX="13.0" layoutY="239.0" text="상승고도">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="elevation3" layoutX="134.0" layoutY="238.0" text="55m">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="startDateLocal3" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<Label fx:id="activitiyName3" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+											<font>
+												<Font size="16.0" />
+											</font>
+										</Label>
+										<TabPane layoutX="200.0" layoutY="73.0">
+											<tabs>
+												<Tab fx:id="imageType31" closable="false" text="Map">
+													<content>
+														<ImageView fx:id="image31" fitHeight="224.0" fitWidth="504.0" pickOnBounds="true" preserveRatio="true">
+															<image>
+																<Image url="https://d3o5xota0a1fcr.cloudfront.net/maps/DNDOZQILN3P6D5KRXPNNXKG7PYM32KW6SQUIBS77P7CJCSRG7GRUZHEIJ2VZX3VZW3VESS6NKE2YUNMG22BZWS4CKRQVACCC" />
+															</image>
+														</ImageView>
+													</content>
+												</Tab>
+												<Tab closable="false" text="Photo">
+													<content>
+													</content>
+												</Tab>
+											</tabs>
+										</TabPane>
+										<Label fx:id="detailedType3" layoutX="134.0" layoutY="74.0" text="걷기">
+											<font>
+												<Font size="20.0" />
+											</font>
+										</Label>
+										<TextArea fx:id="description3" editable="false" layoutX="198.0" layoutY="29.0" prefHeight="36.0" prefWidth="506.0" text="오늘 코스가 재밌다는  아들.&#10;특히 낙타등 재미에 빠져 평지는 심심하단다.ㅋ&#10;담주 한번더  .코스바꿔 타보는거로.." />
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+				<Label layoutX="227.0" layoutY="83.0" text="주요 운동">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label fx:id="primarySport" layoutX="414.0" layoutY="83.0" text="자전거">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+			</children>
+		</Pane>
+	</center>
+	<bottom>
+		<ScrollPane prefHeight="110.0" prefWidth="1024.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+			<content>
+				<FlowPane prefWidth="1021.0">
+					<children>
+						<ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="https://dgalywyr863hv.cloudfront.net/pictures/athletes/51315032/14526524/2/large.jpg" />
+							</image>
+							<FlowPane.margin>
+								<Insets left="5.0" top="5.0" />
+							</FlowPane.margin>
+						</ImageView>
+						<ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="https://dgalywyr863hv.cloudfront.net/pictures/athletes/51315032/14526524/2/large.jpg" />
+							</image>
+							<FlowPane.margin>
+								<Insets left="5.0" top="5.0" />
+							</FlowPane.margin>
+						</ImageView>
+					</children>
+				</FlowPane>
+			</content>
+		</ScrollPane>
+	</bottom>
+	<right>
+		<ScrollPane prefHeight="550.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+			<content>
+				<FlowPane prefHeight="548.0" prefWidth="248.0">
+					<children>
+						<Pane prefHeight="121.0" prefWidth="246.0">
+							<children>
+								<ImageView fitHeight="77.0" fitWidth="81.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="https://dgalywyr863hv.cloudfront.net/pictures/athletes/51315032/14526524/2/large.jpg" />
+									</image>
+								</ImageView>
+								<Label layoutX="109.0" layoutY="14.0" text="주요 운동" />
+								<Label layoutX="171.0" layoutY="14.0" text="자전거" />
+								<Label layoutX="109.0" layoutY="34.0" prefHeight="14.0" prefWidth="128.0" text="서울, 서울시" />
+								<Label alignment="CENTER" layoutX="14.0" layoutY="93.0" prefHeight="14.0" prefWidth="82.0" text="태훈 김" />
+								<Label layoutX="110.0" layoutY="55.0" text="거리" />
+								<Label layoutX="110.0" layoutY="74.0" text="이동 시간" />
+								<Label layoutX="172.0" layoutY="55.0" text="180.8km" />
+								<Label layoutX="172.0" layoutY="74.0" text="17:09:37" />
+							</children>
+						</Pane>
+					</children>
+				</FlowPane>
+			</content>
+		</ScrollPane>
+	</right>
 </BorderPane>
