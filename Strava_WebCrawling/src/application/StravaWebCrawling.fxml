@@ -39,7 +39,7 @@
 		</Pane>
 	</top>
 	<center>
-		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+		<Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<children>
 				<ImageView fx:id="profile" fitHeight="170.0" fitWidth="162.0" layoutX="38.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
 					<image>
@@ -91,18 +91,18 @@
 						<Font size="20.0" />
 					</font>
 				</Label>
-				<Label fx:id="monthlyTime" alignment="CENTER_RIGHT" layoutX="518.0" layoutY="153.0" prefHeight="24.0" prefWidth="89.0" text="17:09:37">
+				<Label fx:id="monthlyTime" alignment="CENTER_RIGHT" layoutX="518.0" layoutY="153.0" prefHeight="24.0" prefWidth="114.0" text="17:09:37">
 					<font>
 						<Font size="20.0" />
 					</font>
 				</Label>
-				<TabPane layoutX="38.0" layoutY="202.0" prefHeight="334.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE">
+				<TabPane fx:id="recentActivityTabPane" layoutX="38.0" layoutY="202.0" prefHeight="334.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE">
 					<tabs>
 						<Tab fx:id="activityNameDate1" text="2020년 8월 14일 | 점심 걷기">
 							<content>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+								<AnchorPane fx:id="recentActivityAnchorPane1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 									<children>
-										<ImageView fx:id="detailedTypeImg1" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="detailedTypeImg1" fitHeight="30.0" fitWidth="37.0" layoutX="200.0" pickOnBounds="true" preserveRatio="true">
 											<image>
 												<Image url="@../../resources/walk.png" />
 											</image>
@@ -112,7 +112,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="movingTime1" layoutX="130.0" layoutY="131.0" text="22:16">
+										<Label fx:id="movingTime1" alignment="CENTER_RIGHT" layoutX="89.0" layoutY="131.0" prefHeight="24.0" prefWidth="83.0" text="22:16">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -122,7 +122,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="distance1" layoutX="123.0" layoutY="187.0" text="1.5km">
+										<Label fx:id="distance1" alignment="CENTER_RIGHT" layoutX="72.0" layoutY="187.0" prefHeight="24.0" prefWidth="100.0" text="1.5km">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -132,22 +132,22 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="elevation1" layoutX="134.0" layoutY="238.0" text="55m">
+										<Label fx:id="elevation1" alignment="CENTER_RIGHT" layoutX="101.0" layoutY="238.0" prefHeight="24.0" prefWidth="70.0" text="55m">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="startDateLocal1" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+										<Label fx:id="startDateLocal1" layoutX="10.0" layoutY="13.0" prefHeight="40.0" prefWidth="175.0" text="2020년 8월 14일">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="activitiyName1" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+										<Label fx:id="activityName1" layoutX="249.0" layoutY="3.0" prefHeight="24.0" prefWidth="451.0" text="점심 걷기">
 											<font>
 												<Font size="16.0" />
 											</font>
 										</Label>
-										<TabPane layoutX="200.0" layoutY="73.0">
+										<TabPane fx:id="image1TabPane" layoutX="200.0" layoutY="73.0">
 											<tabs>
 												<Tab fx:id="imageType11" closable="false" text="Map">
 													<content>
@@ -158,13 +158,9 @@
 														</ImageView>
 													</content>
 												</Tab>
-												<Tab closable="false" text="Photo">
-													<content>
-													</content>
-												</Tab>
 											</tabs>
 										</TabPane>
-										<Label fx:id="detailedType1" layoutX="134.0" layoutY="74.0" text="걷기">
+										<Label fx:id="detailedType1" alignment="CENTER_RIGHT" layoutX="13.0" layoutY="74.0" prefHeight="24.0" prefWidth="160.0" text="걷기">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -176,11 +172,11 @@
 						</Tab>
 						<Tab fx:id="activityNameDate2" text="Untitled Tab 2">
 							<content>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+								<AnchorPane fx:id="recentActivityAnchorPane2" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 									<children>
-										<ImageView fx:id="detailedTypeImg2" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="detailedTypeImg2" fitHeight="30.0" fitWidth="37.0" layoutX="200.0" pickOnBounds="true" preserveRatio="true">
 											<image>
-												<Image url="@../../../icon/walk.png" />
+												<Image url="@../../resources/walk.png" />
 											</image>
 										</ImageView>
 										<Label layoutX="14.0" layoutY="131.0" text="시간">
@@ -188,7 +184,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="movingTime2" layoutX="130.0" layoutY="131.0" text="22:16">
+										<Label fx:id="movingTime2" alignment="CENTER_RIGHT" layoutX="89.0" layoutY="131.0" prefHeight="24.0" prefWidth="83.0" text="22:16">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -198,7 +194,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="distance2" layoutX="123.0" layoutY="187.0" text="1.5km">
+										<Label fx:id="distance2" alignment="CENTER_RIGHT" layoutX="72.0" layoutY="187.0" prefHeight="24.0" prefWidth="100.0" text="1.5km">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -208,22 +204,22 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="elevation2" layoutX="134.0" layoutY="238.0" text="55m">
+										<Label fx:id="elevation2" alignment="CENTER_RIGHT" layoutX="101.0" layoutY="238.0" prefHeight="24.0" prefWidth="70.0" text="55m">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="startDateLocal2" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+										<Label fx:id="startDateLocal2" layoutX="10.0" layoutY="13.0" prefHeight="40.0" prefWidth="175.0" text="2020년 8월 14일">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="activitiyName2" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+										<Label fx:id="activityName2" layoutX="249.0" layoutY="3.0" prefHeight="24.0" prefWidth="451.0" text="점심 걷기">
 											<font>
 												<Font size="16.0" />
 											</font>
 										</Label>
-										<TabPane layoutX="200.0" layoutY="73.0">
+										<TabPane fx:id="image2TabPane" layoutX="200.0" layoutY="73.0">
 											<tabs>
 												<Tab fx:id="imageType21" closable="false" text="Map">
 													<content>
@@ -234,13 +230,9 @@
 														</ImageView>
 													</content>
 												</Tab>
-												<Tab closable="false" text="Photo">
-													<content>
-													</content>
-												</Tab>
 											</tabs>
 										</TabPane>
-										<Label fx:id="detailedType2" layoutX="134.0" layoutY="74.0" text="걷기">
+										<Label fx:id="detailedType2" alignment="CENTER_RIGHT" layoutX="13.0" layoutY="74.0" prefHeight="24.0" prefWidth="160.0" text="걷기">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -252,11 +244,11 @@
 						</Tab>
 						<Tab fx:id="activityNameDate3" text="Untitled Tab 3">
 							<content>
-								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+								<AnchorPane fx:id="recentActivityAnchorPane3" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 									<children>
-										<ImageView fx:id="detailedTypeImg3" fitHeight="45.0" fitWidth="46.0" layoutX="11.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+										<ImageView fx:id="detailedTypeImg3" fitHeight="30.0" fitWidth="37.0" layoutX="200.0" pickOnBounds="true" preserveRatio="true">
 											<image>
-												<Image url="@../../../icon/walk.png" />
+												<Image url="@../../resources/walk.png" />
 											</image>
 										</ImageView>
 										<Label layoutX="14.0" layoutY="131.0" text="시간">
@@ -264,7 +256,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="movingTime3" layoutX="130.0" layoutY="131.0" text="22:16">
+										<Label fx:id="movingTime3" alignment="CENTER_RIGHT" layoutX="89.0" layoutY="131.0" prefHeight="24.0" prefWidth="83.0" text="22:16">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -274,7 +266,7 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="distance3" layoutX="123.0" layoutY="187.0" text="1.5km">
+										<Label fx:id="distance3" alignment="CENTER_RIGHT" layoutX="72.0" layoutY="187.0" prefHeight="24.0" prefWidth="100.0" text="1.5km">
 											<font>
 												<Font size="20.0" />
 											</font>
@@ -284,22 +276,22 @@
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="elevation3" layoutX="134.0" layoutY="238.0" text="55m">
+										<Label fx:id="elevation3" alignment="CENTER_RIGHT" layoutX="101.0" layoutY="238.0" prefHeight="24.0" prefWidth="70.0" text="55m">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="startDateLocal3" layoutX="15.0" layoutY="13.0" text="2020년 8월 14일">
+										<Label fx:id="startDateLocal3" layoutX="10.0" layoutY="13.0" prefHeight="40.0" prefWidth="175.0" text="2020년 8월 14일">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<Label fx:id="activitiyName3" layoutX="200.0" layoutY="3.0" prefHeight="24.0" prefWidth="90.0" text="점심 걷기">
+										<Label fx:id="activityName3" layoutX="249.0" layoutY="3.0" prefHeight="24.0" prefWidth="451.0" text="점심 걷기">
 											<font>
 												<Font size="16.0" />
 											</font>
 										</Label>
-										<TabPane layoutX="200.0" layoutY="73.0">
+										<TabPane fx:id="image3TabPane" layoutX="200.0" layoutY="73.0">
 											<tabs>
 												<Tab fx:id="imageType31" closable="false" text="Map">
 													<content>
@@ -310,13 +302,9 @@
 														</ImageView>
 													</content>
 												</Tab>
-												<Tab closable="false" text="Photo">
-													<content>
-													</content>
-												</Tab>
 											</tabs>
 										</TabPane>
-										<Label fx:id="detailedType3" layoutX="134.0" layoutY="74.0" text="걷기">
+										<Label fx:id="detailedType3" alignment="CENTER_RIGHT" layoutX="13.0" layoutY="74.0" prefHeight="24.0" prefWidth="160.0" text="걷기">
 											<font>
 												<Font size="20.0" />
 											</font>

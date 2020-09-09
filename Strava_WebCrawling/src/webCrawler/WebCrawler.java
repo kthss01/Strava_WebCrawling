@@ -61,6 +61,10 @@ public class WebCrawler {
 	public List<RecentActivity> getRecentActivities() {
 		return recentActivities;
 	}
+	
+	public RecentActivity getRecentActivity(int i) {
+		return recentActivities.get(i);
+	}
 
 	@Override
 	public String toString() {
@@ -76,9 +80,15 @@ public class WebCrawler {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-//		System.out.println(new WebCrawler("https://www.strava.com/athletes/51315032"));
+		System.out.println(new WebCrawler("https://www.strava.com/athletes/51315032"));
 //		System.out.println(new WebCrawler("https://www.strava.com/athletes/7013156"));
 //		System.out.println(new WebCrawler("https://www.strava.com/athletes/6013156"));
-		System.out.println(new WebCrawler("https://www.strava.com/athletes/4013156"));
+//		System.out.println(new WebCrawler("https://www.strava.com/athletes/4013156"));
+
+//		// 검색을 위한 테스트
+//		for (int i = 0; i < 10000; i++) {
+//			System.out.println(new WebCrawler("https://www.strava.com/athletes/51315032"));
+//			System.out.println(i);
+//		}
 	}
 }
