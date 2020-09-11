@@ -83,19 +83,16 @@ public class StravaWebCrawlingController implements Initializable {
 					break;
 				WebCrawler bookMark = new WebCrawler(urlBase + userNumber);
 				bookMark.setBookMarked(true);
-				
+
 				bookMarks.put(bookMark.getUserNumber(), bookMark);
 				updateBookMarkImage(true, bookMark.getUserNumber());
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -107,7 +104,6 @@ public class StravaWebCrawlingController implements Initializable {
 			pw.close();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -120,32 +116,32 @@ public class StravaWebCrawlingController implements Initializable {
 	Map<String, ImageView> bookMarkImages;
 
 	private void updateBookMarkImage(boolean isAdd, String userName) {
-		ObservableList<Node> bookMarkList = bookMarkFlowPane.getChildren(); 
-		if(isAdd == true) {
+		ObservableList<Node> bookMarkList = bookMarkFlowPane.getChildren();
+
+		if (isAdd == true) {
 			ImageView imageView = new ImageView();
 			imageView.setImage(new Image(bookMarks.get(userName).getAthlete().getAvatarUrl()));
 			imageView.setPreserveRatio(true);
 			imageView.setSmooth(true);
 			imageView.setFitWidth(100);
 			imageView.setFitHeight(100);
-			
+
 			imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent event) {
 					loadData(userName);
 					showData();
-					
+
 					event.consume();
 				}
-				
+
 			});
-			
+
 			bookMarkList.add(imageView);
-			bookMarks.get(userName).setBookMarkImageNum(bookMarkFlowPane.getChildren().size()-1);
-			bookMarkFlowPane.setMargin(imageView, new Insets(5,0,0,5));
-		}
-		else {
+			bookMarks.get(userName).setBookMarkImageNum(bookMarkFlowPane.getChildren().size() - 1);
+			bookMarkFlowPane.setMargin(imageView, new Insets(5, 0, 0, 5));
+		} else {
 			bookMarkList.remove(bookMarks.get(userName).getBookMarkImageNum());
 		}
 	}
@@ -198,13 +194,13 @@ public class StravaWebCrawlingController implements Initializable {
 		if (bookMarkCheckBox.isSelected()) {
 //			System.out.println("add bookmark");
 			webCrawler.setBookMarked(true);
-			
+
 			bookMarks.put(webCrawler.getUserNumber(), webCrawler);
 			updateBookMarkImage(true, webCrawler.getUserNumber());
 		} else {
 //			System.out.println("delete bookmark");
 			webCrawler.setBookMarked(false);
-			
+
 			updateBookMarkImage(false, webCrawler.getUserNumber());
 			bookMarks.remove(webCrawler.getUserNumber());
 		}
@@ -235,11 +231,24 @@ public class StravaWebCrawlingController implements Initializable {
 		}
 	}
 
+	@FXML
+	Pane openPane;
+
+	@FXML
+	Pane closedPane;
+
 	private void showData() {
 		bookMarkCheckBox.setSelected(webCrawler.isBookMarked());
 
-		showBasicData();
-		showRecentlyData();
+		if (webCrawler.isOpened()) {
+			openPane.setVisible(true);
+			closedPane.setVisible(false);
+			showBasicData();
+			showRecentlyData();
+		} else {
+			openPane.setVisible(false);
+			closedPane.setVisible(true);
+		}
 	}
 
 	@FXML

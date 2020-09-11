@@ -69,10 +69,6 @@ public class WebCrawler {
 		}
 	}
 
-	public boolean isOpened() {
-		return isOpened;
-	}
-	
 	public boolean isBookMarked() {
 		return isBookMarked;
 	}
