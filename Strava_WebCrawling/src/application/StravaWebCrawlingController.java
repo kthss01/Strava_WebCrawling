@@ -1,16 +1,29 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.json.simple.parser.ParseException;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -18,8 +31,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import webCrawler.RecentActivity;
 import webCrawler.WebCrawler;
 
@@ -28,14 +44,202 @@ public class StravaWebCrawlingController implements Initializable {
 	final String urlBase = "https://www.strava.com/athletes/";
 
 	WebCrawler webCrawler;
+	Map<String, WebCrawler> bookMarks;
+
+	@FXML
+	Pane mainPane;
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		createNoDataImg();
+		bookMarkFlowPane.getChildren().clear();
+
+		bookMarks = new HashMap<>();
+		readBookMarks();
+
+		if (bookMarks.size() == 0)
+			loadData("51315032");
+		else
+			loadData((String) bookMarks.keySet().toArray()[0]);
+
+		showData();
+	}
 
 	@FXML
 	TextField userQuery;
 
 	@FXML
 	public void searchUserBtn(ActionEvent event) {
-		loadData(urlBase + userQuery.getText());
+		loadData(userQuery.getText());
 		showData();
+	}
+
+	private void readBookMarks() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("./resources/bookmark.txt"));
+			while (true) {
+				String userNumber = br.readLine();
+				if (userNumber == null)
+					break;
+				WebCrawler bookMark = new WebCrawler(urlBase + userNumber);
+				bookMark.setBookMarked(true);
+				
+				bookMarks.put(bookMark.getUserNumber(), bookMark);
+				updateBookMarkImage(true, bookMark.getUserNumber());
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void saveBookMarks() {
+		try {
+			PrintWriter pw = new PrintWriter("./resources/bookmark.txt");
+			bookMarks.forEach((key, value) -> pw.println(value.getUserNumber()));
+			pw.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@FXML
+	ImageView bookMarkImage1;
+	@FXML
+	FlowPane bookMarkFlowPane;
+	Map<String, ImageView> bookMarkImages;
+
+	private void updateBookMarkImage(boolean isAdd, String userName) {
+		ObservableList<Node> bookMarkList = bookMarkFlowPane.getChildren(); 
+		if(isAdd == true) {
+			ImageView imageView = new ImageView();
+			imageView.setImage(new Image(bookMarks.get(userName).getAthlete().getAvatarUrl()));
+			imageView.setPreserveRatio(true);
+			imageView.setSmooth(true);
+			imageView.setFitWidth(100);
+			imageView.setFitHeight(100);
+			
+			imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent event) {
+					loadData(userName);
+					showData();
+					
+					event.consume();
+				}
+				
+			});
+			
+			bookMarkList.add(imageView);
+			bookMarks.get(userName).setBookMarkImageNum(bookMarkFlowPane.getChildren().size()-1);
+			bookMarkFlowPane.setMargin(imageView, new Insets(5,0,0,5));
+		}
+		else {
+			bookMarkList.remove(bookMarks.get(userName).getBookMarkImageNum());
+		}
+	}
+
+	Stage stage;
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+		stage.setOnCloseRequest(event -> {
+			event.consume();
+			/*
+			 * Alert closeConfiguration = new Alert(Alert.AlertType.CONFIRMATION);
+			 * closeConfiguration.setTitle("Strava 선수 검색기");
+			 * closeConfiguration.setHeaderText("프로그램 종료");
+			 * closeConfiguration.setContentText("프로그램을 종료하시겠습니까?"); Optional<ButtonType>
+			 * result = closeConfiguration.showAndWait(); if
+			 * (result.get().equals(ButtonType.OK)) { stage.close(); System.exit(1); }
+			 */
+
+			Alert saveConfiguration = new Alert(Alert.AlertType.CONFIRMATION);
+			saveConfiguration.setTitle("Strava 선수 검색기");
+			saveConfiguration.setHeaderText("즐겨찾기 저장 & 종료");
+			saveConfiguration.setContentText("즐겨찾기를 저장하고 종료하시겠습니까?");
+
+			ButtonType buttonTypeSaveAndQuit = new ButtonType("저장하고 종료");
+			ButtonType buttonTypeQuit = new ButtonType("종료");
+			ButtonType buttonTypeCancel = new ButtonType("취소", ButtonData.CANCEL_CLOSE);
+
+			saveConfiguration.getButtonTypes().setAll(buttonTypeSaveAndQuit, buttonTypeQuit, buttonTypeCancel);
+
+			Optional<ButtonType> result = saveConfiguration.showAndWait();
+			if (result.get() == buttonTypeSaveAndQuit) {
+				saveBookMarks();
+				stage.close();
+				System.exit(1);
+			} else if (result.get() == buttonTypeQuit) {
+				stage.close();
+				System.exit(1);
+			} else {
+
+			}
+		});
+	}
+
+	@FXML
+	CheckBox bookMarkCheckBox;
+
+	@FXML
+	public void setBookMark(ActionEvent event) {
+		if (bookMarkCheckBox.isSelected()) {
+//			System.out.println("add bookmark");
+			webCrawler.setBookMarked(true);
+			
+			bookMarks.put(webCrawler.getUserNumber(), webCrawler);
+			updateBookMarkImage(true, webCrawler.getUserNumber());
+		} else {
+//			System.out.println("delete bookmark");
+			webCrawler.setBookMarked(false);
+			
+			updateBookMarkImage(false, webCrawler.getUserNumber());
+			bookMarks.remove(webCrawler.getUserNumber());
+		}
+
+	}
+
+	private void createNoDataImg() {
+		noDataImg = new ImageView();
+		noDataImg.setImage(new Image("file:resources/noData.png"));
+		noDataImg.setLayoutX(recentActivityTabPane.getLayoutX() + 150);
+		noDataImg.setLayoutY(recentActivityTabPane.getLayoutY());
+		noDataImg.setFitWidth(recentActivityTabPane.getPrefWidth());
+		noDataImg.setFitHeight(recentActivityTabPane.getPrefHeight());
+		noDataImg.setPreserveRatio(true);
+		pane.getChildren().add(noDataImg);
+		noDataImg.setVisible(false);
+	}
+
+	private void loadData(String userNumber) {
+		if (bookMarks.containsKey(userNumber))
+			webCrawler = bookMarks.get(userNumber);
+		else {
+			try {
+				webCrawler = new WebCrawler(urlBase + userNumber);
+			} catch (IOException | ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void showData() {
+		bookMarkCheckBox.setSelected(webCrawler.isBookMarked());
+
+		showBasicData();
+		showRecentlyData();
 	}
 
 	@FXML
@@ -109,6 +313,9 @@ public class StravaWebCrawlingController implements Initializable {
 
 		description1.setText(activity.getDescription());
 
+		image1TabPane.getTabs().clear();
+		image1TabPane.getTabs().add(imageType11);
+
 		int imageSize = activity.getImages().size();
 		if (imageSize == 0) {
 			image11.setImage(new Image("file:resources/noImage.png"));
@@ -176,6 +383,9 @@ public class StravaWebCrawlingController implements Initializable {
 
 		description2.setText(activity.getDescription());
 
+		image2TabPane.getTabs().clear();
+		image2TabPane.getTabs().add(imageType21);
+
 		int imageSize = activity.getImages().size();
 		if (imageSize == 0) {
 			image21.setImage(new Image("file:resources/noImage.png"));
@@ -241,6 +451,9 @@ public class StravaWebCrawlingController implements Initializable {
 
 		description3.setText(activity.getDescription());
 
+		image3TabPane.getTabs().clear();
+		image3TabPane.getTabs().add(imageType31);
+
 		int imageSize = activity.getImages().size();
 		if (imageSize == 0) {
 			image31.setImage(new Image("file:resources/noImage.png"));
@@ -298,7 +511,7 @@ public class StravaWebCrawlingController implements Initializable {
 		} else {
 			noDataImg.setVisible(false);
 			recentActivityTabPane.setVisible(true);
-			
+
 			if (activityCount >= 1) {
 				// RecentActivity 1
 				setRecentActivity1();
@@ -321,40 +534,6 @@ public class StravaWebCrawlingController implements Initializable {
 				recentActivityTabPane.getTabs().remove(activityNameDate2);
 			}
 		}
-
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		loadData("https://www.strava.com/athletes/51315032");
-		showData();
-
-		createNoDataImg();
-	}
-
-	private void createNoDataImg() {
-		noDataImg = new ImageView();
-		noDataImg.setImage(new Image("file:resources/noData.png"));
-		noDataImg.setLayoutX(recentActivityTabPane.getLayoutX() + 150);
-		noDataImg.setLayoutY(recentActivityTabPane.getLayoutY());
-		noDataImg.setFitWidth(recentActivityTabPane.getPrefWidth());
-		noDataImg.setFitHeight(recentActivityTabPane.getPrefHeight());
-		noDataImg.setPreserveRatio(true);
-		pane.getChildren().add(noDataImg);
-		noDataImg.setVisible(false);
-	}
-
-	private void loadData(String url) {
-		try {
-			webCrawler = new WebCrawler(url);
-		} catch (IOException | ParseException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void showData() {
-		showBasicData();
-		showRecentlyData();
 	}
 
 }
