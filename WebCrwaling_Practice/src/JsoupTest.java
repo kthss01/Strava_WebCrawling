@@ -24,7 +24,7 @@ public class JsoupTest {
 			
 			// 원하는 부분은 Elements 형태로 되어 있으므로 이를 String 형태로 바꾸어 준다.
 			String text = contents.text();
-//			System.out.println(text);
+			System.out.println(text);
 
 		} catch (IOException e) {
 			// Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용

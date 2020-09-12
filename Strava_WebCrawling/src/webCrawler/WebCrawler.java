@@ -23,6 +23,8 @@ public class WebCrawler {
 	Stats stats;
 	List<RecentActivity> recentActivities;
 
+	List<Trophy> trophies;
+	
 	boolean isOpened;
 
 	public WebCrawler(String url) throws IOException, ParseException {
@@ -59,12 +61,20 @@ public class WebCrawler {
 
 		athlete = new Athlete((JSONObject) obj.get("athlete"));
 		stats = new Stats((JSONObject) obj.get("stats"));
+		
 		recentActivities = new ArrayList<>();
-
 		JSONArray arr = (JSONArray) obj.get("recentActivities");
 		if (arr != null) {
 			for (int i = 0; i < arr.size(); i++) {
 				recentActivities.add(new RecentActivity((JSONObject) arr.get(i)));
+			}
+		}
+		
+		trophies = new ArrayList<>();
+		arr = (JSONArray) obj.get("trophies");
+		if (arr != null) {
+			for (int i = 0; i < arr.size(); i++) {
+				trophies.add(new Trophy((JSONObject) arr.get(i)));
 			}
 		}
 	}
@@ -108,6 +118,14 @@ public class WebCrawler {
 	public RecentActivity getRecentActivity(int i) {
 		return recentActivities.get(i);
 	}
+	
+	public List<Trophy> getTrophies() {
+		return trophies;
+	}
+	
+	public Trophy getTrophy(int i) {
+		return trophies.get(i);
+	}
 
 	@Override
 	public String toString() {
@@ -120,21 +138,26 @@ public class WebCrawler {
 
 		sb.append(getAthlete());
 		sb.append(getStats());
+		
 		for (RecentActivity recentActivity : recentActivities) {
 			sb.append(recentActivity);
+		}
+		
+		for (Trophy trophy : trophies) {
+			sb.append(trophy);
 		}
 
 		return sb.toString();
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-//		System.out.println(new WebCrawler("https://www.strava.com/athletes/51315032"));
+		System.out.println(new WebCrawler("https://www.strava.com/athletes/51315032"));
 //		System.out.println(new WebCrawler("https://www.strava.com/athletes/7013156"));
 //		System.out.println(new WebCrawler("https://www.strava.com/athletes/6013156"));
 //		System.out.println(new WebCrawler("https://www.strava.com/athletes/4013156"));
 
 		// 없는 거 테스트
-		System.out.println(new WebCrawler("https://www.strava.com/athletes/10000"));
+//		System.out.println(new WebCrawler("https://www.strava.com/athletes/10000"));
 
 		// 검색을 위한 스레드 테스트
 //		StringBuilder sb = new StringBuilder();

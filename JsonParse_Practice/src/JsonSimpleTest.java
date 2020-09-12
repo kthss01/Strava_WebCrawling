@@ -46,6 +46,17 @@ public class JsonSimpleTest {
 		 * recentActivities - 최근 활동 내역
 		 */
 
+//		System.out.println(obj.get("trophies"));
+		printJsonArray((JSONArray)obj.get("trophies"));
+		
+		/*
+		 * date
+		 * logo_url
+		 * name
+		 * url
+		 * teaser
+		 */
+		
 //		System.out.println(obj.get("athlete"));
 //		((JSONObject) obj.get("athlete")).forEach((key, value) -> System.out.println(key + " " + value));
 //		printJsonObject(obj.get("athlete"));
@@ -79,7 +90,7 @@ public class JsonSimpleTest {
 		 */
 
 //		System.out.println(obj.get("recentActivities")); // JSONArray
-		printJsonArray(obj.get("recentActivities"));
+//		printJsonArray(obj.get("recentActivities"));
 		/*
 		 * elevation
 		 * images - JSONArray 

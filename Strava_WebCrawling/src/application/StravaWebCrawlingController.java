@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -37,6 +39,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import webCrawler.RecentActivity;
+import webCrawler.Trophy;
 import webCrawler.WebCrawler;
 
 public class StravaWebCrawlingController implements Initializable {
@@ -51,6 +54,8 @@ public class StravaWebCrawlingController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		createTrophiesData();
+
 		createNoDataImg();
 		bookMarkFlowPane.getChildren().clear();
 
@@ -245,6 +250,7 @@ public class StravaWebCrawlingController implements Initializable {
 			closedPane.setVisible(false);
 			showBasicData();
 			showRecentlyData();
+			showTrophiesData();
 		} else {
 			openPane.setVisible(false);
 			closedPane.setVisible(true);
@@ -411,6 +417,7 @@ public class StravaWebCrawlingController implements Initializable {
 					Tab tab = new Tab();
 					tab.setContent(imageView);
 					tab.setText(activity.getImages().get(i).getType());
+					tab.setClosable(false);
 					image2TabPane.getTabs().add(tab);
 				}
 			}
@@ -479,6 +486,7 @@ public class StravaWebCrawlingController implements Initializable {
 					Tab tab = new Tab();
 					tab.setContent(imageView);
 					tab.setText(activity.getImages().get(i).getType());
+					tab.setClosable(false);
 					image3TabPane.getTabs().add(tab);
 				}
 			}
@@ -515,7 +523,8 @@ public class StravaWebCrawlingController implements Initializable {
 	private void showRecentlyData() {
 		int activityCount = webCrawler.getRecentActivities().size();
 		if (activityCount == 0) {
-			noDataImg.setVisible(true);
+			if (closedPane.isVisible() == false)
+				noDataImg.setVisible(true);
 			recentActivityTabPane.setVisible(false);
 		} else {
 			noDataImg.setVisible(false);
@@ -545,4 +554,83 @@ public class StravaWebCrawlingController implements Initializable {
 		}
 	}
 
+	@FXML
+	FlowPane trophiesFlowPane;
+
+	@FXML
+	Pane trophyPane1;
+
+	@FXML
+	ImageView trophyLogoImage1;
+
+	@FXML
+	Label trophyDate1;
+
+	@FXML
+	Label trophyName1;
+
+	List<Pane> trophiesPane;
+
+	private void createTrophiesData() {
+		trophiesPane = new ArrayList<>();
+
+		trophiesPane.add(trophyPane1);
+
+		for (int i = 1; i < 4; i++) {
+			Pane tropyPane = new Pane();
+			ImageView trophyLogoImage = new ImageView();
+			Label trophyDate = new Label();
+			Label trophyName = new Label();
+
+			trophyLogoImage.setImage(trophyLogoImage1.getImage());
+			trophyLogoImage.setPreserveRatio(true);
+			trophyLogoImage.setSmooth(true);
+			trophyLogoImage.setFitHeight(trophyLogoImage1.getFitHeight());
+			trophyLogoImage.setFitWidth(trophyLogoImage1.getFitWidth());
+			trophyLogoImage.setLayoutX(trophyLogoImage1.getLayoutX());
+			trophyLogoImage.setLayoutY(trophyLogoImage1.getLayoutY());
+
+			trophyName.setText(trophyName1.getText());
+			trophyName.setLayoutX(trophyName1.getLayoutX());
+			trophyName.setLayoutY(trophyName1.getLayoutY());
+			trophyName.setFont(trophyName1.getFont());
+			trophyName.setPrefHeight(trophyName1.getPrefHeight());
+			trophyName.setPrefWidth(trophyName1.getPrefWidth());
+			trophyName.setAlignment(trophyName1.getAlignment());
+
+			trophyDate.setText(trophyDate1.getText());
+			trophyDate.setLayoutX(trophyDate1.getLayoutX());
+			trophyDate.setLayoutY(trophyDate1.getLayoutY());
+			trophyDate.setFont(trophyDate1.getFont());
+			trophyDate.setPrefHeight(trophyDate1.getPrefHeight());
+			trophyDate.setPrefWidth(trophyDate1.getPrefWidth());
+			trophyDate.setAlignment(trophyDate1.getAlignment());
+
+			tropyPane.getChildren().add(trophyLogoImage);
+			tropyPane.getChildren().add(trophyDate);
+			tropyPane.getChildren().add(trophyName);
+
+			trophiesPane.add(tropyPane);
+		}
+	}
+
+	private void showTrophiesData() {
+		trophiesFlowPane.getChildren().clear();
+
+		int trophyCount = webCrawler.getTrophies().size();
+		for (int i = 0; i < trophyCount; i++) {
+			Pane trophyPane = trophiesPane.get(i);
+			ImageView trophyLogoImage = (ImageView) trophyPane.getChildren().get(0);
+			Label trophyDate = (Label) trophyPane.getChildren().get(1);
+			Label trophyName = (Label) trophyPane.getChildren().get(2);
+
+			Trophy trophy = webCrawler.getTrophy(i);
+
+			trophyLogoImage.setImage(new Image(trophy.getLogo_url()));
+			trophyDate.setText(trophy.getDate());
+			trophyName.setText(trophy.getName());
+
+			trophiesFlowPane.getChildren().add(trophyPane);
+		}
+	}
 }
