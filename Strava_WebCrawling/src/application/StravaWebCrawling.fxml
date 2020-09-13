@@ -21,7 +21,7 @@
 	<top>
 		<Pane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<children>
-				<TextField fx:id="userQuery" layoutX="125.0" layoutY="107.0" prefHeight="50.0" prefWidth="399.0" promptText="선수 번호 입력 ex) 51315032">
+				<TextField fx:id="userQuery" layoutX="125.0" layoutY="107.0" prefHeight="50.0" prefWidth="399.0">
 					<font>
 						<Font name="Corbel" size="24.0" />
 					</font>
@@ -41,6 +41,11 @@
 						<Font size="18.0" />
 					</font>
 				</Label>
+            <Label layoutX="306.0" layoutY="163.0" text="선수 번호 입력 ex) 51315032">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
 			</children>
 		</Pane>
 	</top>

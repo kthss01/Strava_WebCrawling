@@ -31,6 +31,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -144,10 +145,23 @@ public class StravaWebCrawlingController implements Initializable {
 			});
 
 			bookMarkList.add(imageView);
-			bookMarks.get(userName).setBookMarkImageNum(bookMarkFlowPane.getChildren().size() - 1);
 			bookMarkFlowPane.setMargin(imageView, new Insets(5, 0, 0, 5));
 		} else {
-			bookMarkList.remove(bookMarks.get(userName).getBookMarkImageNum());
+
+			String avatarUrl = bookMarks.get(userName).getAthlete().getAvatarUrl();
+
+			for (Node bookMark : bookMarkList) {
+				ImageView bookMarkImageView = (ImageView) bookMark;
+				
+				if (bookMarkImageView.getImage().getUrl().equals(avatarUrl)) {
+					if (webCrawler.getUserNumber() == userName) {
+						webCrawler = null;
+					}
+					
+					bookMarkList.remove(bookMark);
+					break;
+				}
+			}
 		}
 	}
 
@@ -206,8 +220,24 @@ public class StravaWebCrawlingController implements Initializable {
 //			System.out.println("delete bookmark");
 			webCrawler.setBookMarked(false);
 
-			updateBookMarkImage(false, webCrawler.getUserNumber());
-			bookMarks.remove(webCrawler.getUserNumber());
+			// webCrawler가 날라갈 수 있음 (null이 될 수 있음 북마크 해제하다가)
+			String userNumber = webCrawler.getUserNumber();
+			
+			updateBookMarkImage(false, userNumber);
+			bookMarks.remove(userNumber);
+			
+			if(webCrawler == null) {
+				// 다음 즐겨찾기가 있으면 그거 보여줌
+				if(bookMarks.values().iterator().hasNext()) {
+					webCrawler = bookMarks.values().iterator().next();
+					showData();
+				}
+				else {
+					openPane.setVisible(false);
+					trophiesFlowPane.setVisible(false);
+				}
+			}
+				
 		}
 
 	}
@@ -615,6 +645,7 @@ public class StravaWebCrawlingController implements Initializable {
 	}
 
 	private void showTrophiesData() {
+		trophiesFlowPane.setVisible(true);
 		trophiesFlowPane.getChildren().clear();
 
 		int trophyCount = webCrawler.getTrophies().size();

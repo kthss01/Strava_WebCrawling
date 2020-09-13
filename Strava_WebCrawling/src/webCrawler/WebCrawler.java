@@ -17,7 +17,6 @@ public class WebCrawler {
 
 	String userNumber;
 	boolean isBookMarked;
-	int bookMarkImageNum;
 
 	Athlete athlete;
 	Stats stats;
@@ -44,9 +43,6 @@ public class WebCrawler {
 
 		isBookMarked = false;
 		userNumber = url.substring(url.indexOf("athletes/") + "athletes/".length());
-
-		// 즐겨찾기시 화면 아래 flowPane에서의 list 인덱스
-		bookMarkImageNum = -1;
 
 		addData();
 	}
@@ -89,14 +85,6 @@ public class WebCrawler {
 
 	public void setBookMarked(boolean isBookMarked) {
 		this.isBookMarked = isBookMarked;
-	}
-
-	public int getBookMarkImageNum() {
-		return bookMarkImageNum;
-	}
-
-	public void setBookMarkImageNum(int bookMarkImageNum) {
-		this.bookMarkImageNum = bookMarkImageNum;
 	}
 
 	public String getUserNumber() {
